@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package hashicorp.consul.hcp.v1alpha1;
+
+import "pbresource/annotations.proto";
+
+message CloudLink {
+  option (hashicorp.consul.resource.spec) = {scope: SCOPE_CLUSTER};
+
+  string resource_name = 1;
+  LinkConfig config = 2;
+}
+
+message LinkConfig {
+  string client_id = 1;
+  string client_secret = 2;
+
+  string auth_url = 3;
+  TLS auth_tls = 4;
+
+  string api_address = 5;
+  TLS api_tls = 6;
+
+  string scada_address = 7;
+  TLS scada_tls = 8;
+
+  string portal_url = 9;
+
+  enum TLS {
+    ENABLED = 0;
+    INSECURE = 1;
+    DISABLED = 2;
+  }
+}

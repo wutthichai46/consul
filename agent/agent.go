@@ -900,6 +900,7 @@ func (a *Agent) Start(ctx context.Context) error {
 			"consul_server_id": string(a.config.NodeID),
 		})
 
+		// TODO move start into hcp.Manager to be controlled by cloudlink controller
 		if err = a.scadaProvider.Start(); err != nil {
 			a.baseDeps.Logger.Error("scada provider failed to start, some HashiCorp Cloud Platform functionality has been disabled",
 				"error", err, "resource_id", a.config.Cloud.ResourceID)
