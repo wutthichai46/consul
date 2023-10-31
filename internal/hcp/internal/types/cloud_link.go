@@ -37,7 +37,7 @@ func ValidateCloudLink(res *pbresource.Resource) error {
 		return resource.NewErrDataParse(&link, err)
 	}
 
-	if res.Id.Name != "hcp-link" {
+	if res.Id.Name != "default" {
 		return resource.ErrInvalidField{
 			Name:    "name",
 			Wrapped: linkConfigurationNameError,

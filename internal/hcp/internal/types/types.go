@@ -8,4 +8,6 @@ const (
 	CurrentVersion  = VersionV1Alpha1
 )
 
-func Register(r resource.Registry) {}
+func Register(r resource.Registry) {
+	RegisterCloudLink(r)
+}
