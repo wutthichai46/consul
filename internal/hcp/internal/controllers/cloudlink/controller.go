@@ -2,18 +2,20 @@ package cloudlink
 
 import (
 	"context"
+	"fmt"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
 	"github.com/hashicorp/consul/agent/hcp"
 	"github.com/hashicorp/consul/internal/controller"
+	"github.com/hashicorp/consul/internal/resource"
 	pbhcp "github.com/hashicorp/consul/proto-public/pbhcp/v1alpha1"
 	"github.com/hashicorp/consul/proto-public/pbresource"
 )
 
 const (
-	StatusKey = "consul.io/cloudlink"
+	StatusKey = "consul.io/hcp-link"
 )
 
 func HCPCloudLinkController(manager *hcp.Manager) controller.Controller {
@@ -50,6 +52,38 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 	var cl pbhcp.CloudLink
 	if err := res.Data.UnmarshalTo(&cl); err != nil {
 		rt.Logger.Error("error unmarshalling cloud link data", "error", err)
+		return err
+	}
+
+	conditions := []*pbresource.Condition{
+		{
+			Type:    "initiated",
+			State:   pbresource.Condition_STATE_TRUE,
+			Reason:  "LINK_INITIATED",
+			Message: fmt.Sprintf("Link has been initiated to '%s'", cl.ResourceName),
+		},
+		{
+			Type:    "linked",
+			State:   pbresource.Condition_STATE_TRUE,
+			Reason:  "LINK_SUCCESSFUL",
+			Message: fmt.Sprintf("Successfully linked to '%s'", cl.ResourceName),
+		},
+	}
+	newStatus := &pbresource.Status{
+		ObservedGeneration: res.Generation,
+		Conditions:         conditions,
+	}
+
+	if resource.EqualStatus(res.Status[StatusKey], newStatus, false) {
+		return nil
+	}
+	_, err = rt.Client.WriteStatus(ctx, &pbresource.WriteStatusRequest{
+		Id:     res.Id,
+		Key:    StatusKey,
+		Status: newStatus,
+	})
+
+	if err != nil {
 		return err
 	}
 
