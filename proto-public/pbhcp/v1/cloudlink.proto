@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package hashicorp.consul.hcp.v1;
+
+import "pbresource/annotations.proto";
+
+message Link {
+  option (hashicorp.consul.resource.spec) = {scope: SCOPE_CLUSTER};
+
+  // Required
+  string resource_id = 1;
+
+  string client_id = 2;
+
+  string client_secret = 3;
+
+  // Optional, testing only really
+  string auth_url = 4;
+
+  string api_address = 5;
+
+  string scada_address = 6;
+
+  string portal_url = 7;
+
+  // Info from GNM, can't be set by user
+  ACCESS_LEVEL access_level = 8;
+  
+  enum ACCESS_LEVEL {
+    ACCESS_LEVEL_UNSPECIFIED = 0;
+    ACCESS_LEVEL_GLOBAL_READ_ONLY = 1;
+    ACCESS_LEVEL_GLOBAL_READ_WRITE = 2;
+  }
+}
+
+message LinkConfig {
+  string client_id = 1;
+  string client_secret = 2;
+
+  string auth_url = 3;
+  TLS auth_tls = 4;
+
+  string api_address = 5;
+  TLS api_tls = 6;
+
+  string scada_address = 7;
+  TLS scada_tls = 8;
+
+  string portal_url = 9;
+
+  enum TLS {
+    ENABLED = 0;
+    INSECURE = 1;
+    DISABLED = 2;
+  }
+}
