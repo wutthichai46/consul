@@ -55,17 +55,14 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 		return err
 	}
 
+	// TODO: Start or restart manager with link config.
+
+	// Set link status to successful
 	conditions := []*pbresource.Condition{
-		{
-			Type:    "initiated",
-			State:   pbresource.Condition_STATE_TRUE,
-			Reason:  "LINK_INITIATED",
-			Message: fmt.Sprintf("Link has been initiated to '%s'", cl.ResourceId),
-		},
 		{
 			Type:    "linked",
 			State:   pbresource.Condition_STATE_TRUE,
-			Reason:  "LINK_SUCCESSFUL",
+			Reason:  "Success",
 			Message: fmt.Sprintf("Successfully linked to '%s'", cl.ResourceId),
 		},
 	}
@@ -87,6 +84,5 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 		return err
 	}
 
-	// Start or restart manager with link config.
 	return nil
 }
