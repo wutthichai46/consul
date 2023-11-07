@@ -11,7 +11,7 @@ type Dependencies struct {
 }
 
 func Register(mgr *controller.Manager, deps Dependencies) {
-	mgr.Register(cloudlink.HCPCloudLinkController(
+	mgr.Register(cloudlink.HCPLinkController(
 		deps.Manager,
 	))
 }

@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/hashicorp/consul/internal/resource"
-	pbhcp "github.com/hashicorp/consul/proto-public/pbhcp/v1alpha1"
+	pbhcp "github.com/hashicorp/consul/proto-public/pbhcp/v1"
 	"github.com/hashicorp/consul/proto-public/pbresource"
 )
 
@@ -18,20 +18,20 @@ var (
 
 func RegisterCloudLink(r resource.Registry) {
 	r.Register(resource.Registration{
-		Type:     pbhcp.CloudLinkType,
-		Proto:    &pbhcp.CloudLink{},
+		Type:     pbhcp.LinkType,
+		Proto:    &pbhcp.Link{},
 		Scope:    resource.ScopeCluster,
-		Mutate:   MutateCloudLink,
-		Validate: ValidateCloudLink,
+		Mutate:   MutateLink,
+		Validate: ValidateLink,
 	})
 }
 
-func MutateCloudLink(res *pbresource.Resource) error {
+func MutateLink(res *pbresource.Resource) error {
 	return nil
 }
 
-func ValidateCloudLink(res *pbresource.Resource) error {
-	var link pbhcp.CloudLink
+func ValidateLink(res *pbresource.Resource) error {
+	var link pbhcp.Link
 
 	if err := res.Data.UnmarshalTo(&link); err != nil {
 		return resource.NewErrDataParse(&link, err)

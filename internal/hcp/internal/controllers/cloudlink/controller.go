@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/consul/agent/hcp"
 	"github.com/hashicorp/consul/internal/controller"
 	"github.com/hashicorp/consul/internal/resource"
-	pbhcp "github.com/hashicorp/consul/proto-public/pbhcp/v1alpha1"
+	pbhcp "github.com/hashicorp/consul/proto-public/pbhcp/v1"
 	"github.com/hashicorp/consul/proto-public/pbresource"
 )
 
@@ -18,8 +18,8 @@ const (
 	StatusKey = "consul.io/hcp-link"
 )
 
-func HCPCloudLinkController(manager *hcp.Manager) controller.Controller {
-	return controller.ForType(pbhcp.CloudLinkType).
+func HCPLinkController(manager *hcp.Manager) controller.Controller {
+	return controller.ForType(pbhcp.LinkType).
 		WithReconciler(&hcpLinkReconciler{
 			manager: manager,
 		})
@@ -34,7 +34,7 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 	// reconciliation request processing will not affect future invocations.
 	rt.Logger = rt.Logger.With("resource-id", req.ID, "controller", StatusKey)
 
-	rt.Logger.Trace("reconciling cloud link")
+	rt.Logger.Trace("reconciling link")
 
 	// read the workload
 	rsp, err := rt.Client.Read(ctx, &pbresource.ReadRequest{Id: req.ID})
@@ -49,9 +49,9 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 	}
 
 	res := rsp.Resource
-	var cl pbhcp.CloudLink
+	var cl pbhcp.Link
 	if err := res.Data.UnmarshalTo(&cl); err != nil {
-		rt.Logger.Error("error unmarshalling cloud link data", "error", err)
+		rt.Logger.Error("error unmarshalling link data", "error", err)
 		return err
 	}
 
@@ -60,13 +60,13 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 			Type:    "initiated",
 			State:   pbresource.Condition_STATE_TRUE,
 			Reason:  "LINK_INITIATED",
-			Message: fmt.Sprintf("Link has been initiated to '%s'", cl.ResourceName),
+			Message: fmt.Sprintf("Link has been initiated to '%s'", cl.ResourceId),
 		},
 		{
 			Type:    "linked",
 			State:   pbresource.Condition_STATE_TRUE,
 			Reason:  "LINK_SUCCESSFUL",
-			Message: fmt.Sprintf("Successfully linked to '%s'", cl.ResourceName),
+			Message: fmt.Sprintf("Successfully linked to '%s'", cl.ResourceId),
 		},
 	}
 	newStatus := &pbresource.Status{
@@ -87,6 +87,6 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 		return err
 	}
 
-	// Start or restart manager with cloudlink config.
+	// Start or restart manager with link config.
 	return nil
 }
