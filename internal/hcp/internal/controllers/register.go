@@ -7,11 +7,13 @@ import (
 )
 
 type Dependencies struct {
-	Manager *hcp.Manager
+	Manager    *hcp.Manager
+	Configured bool
 }
 
 func Register(mgr *controller.Manager, deps Dependencies) {
 	mgr.Register(cloudlink.HCPLinkController(
 		deps.Manager,
+		deps.Configured,
 	))
 }

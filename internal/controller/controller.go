@@ -29,6 +29,15 @@ func (c *controllerRunner) run(ctx context.Context) error {
 	c.logger.Debug("controller running")
 	defer c.logger.Debug("controller stopping")
 
+	// Initialize the controller if required
+	if c.ctrl.initializer != nil {
+		err := c.ctrl.initializer.Initialize(ctx, c.runtime())
+		if err != nil {
+			c.logger.Error("error initializing controller", "error", err)
+			return err
+		}
+	}
+
 	group, groupCtx := errgroup.WithContext(ctx)
 	recQueue := runQueue[Request](groupCtx, c.ctrl)
 

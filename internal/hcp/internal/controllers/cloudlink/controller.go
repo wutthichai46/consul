@@ -3,13 +3,16 @@ package cloudlink
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/anypb"
 
 	"github.com/hashicorp/consul/agent/hcp"
 	"github.com/hashicorp/consul/internal/controller"
 	"github.com/hashicorp/consul/internal/resource"
+	"github.com/hashicorp/consul/internal/storage"
 	pbhcp "github.com/hashicorp/consul/proto-public/pbhcp/v1"
 	"github.com/hashicorp/consul/proto-public/pbresource"
 )
@@ -18,11 +21,14 @@ const (
 	StatusKey = "consul.io/hcp-link"
 )
 
-func HCPLinkController(manager *hcp.Manager) controller.Controller {
+func HCPLinkController(manager *hcp.Manager, configured bool) controller.Controller {
 	return controller.ForType(pbhcp.LinkType).
 		WithReconciler(&hcpLinkReconciler{
 			manager: manager,
-		})
+		}).WithInitializer(&hcpLinkInitializer{
+		manager:    manager,
+		configured: configured,
+	})
 }
 
 type hcpLinkReconciler struct {
@@ -81,6 +87,48 @@ func (r *hcpLinkReconciler) Reconcile(ctx context.Context, rt controller.Runtime
 	})
 
 	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+type hcpLinkInitializer struct {
+	manager    *hcp.Manager
+	configured bool
+}
+
+func (i hcpLinkInitializer) Initialize(ctx context.Context, rt controller.Runtime) error {
+	if !i.configured {
+		return nil
+	}
+
+	// Create the link resource to reflect the configuration
+	data, err := anypb.New(&pbhcp.Link{
+		// TODO: Determine the configured resource ID, client ID, and client secret
+	})
+	if err != nil {
+		return err
+	}
+	_, err = rt.Client.Write(ctx,
+		&pbresource.WriteRequest{
+			Resource: &pbresource.Resource{
+				Id: &pbresource.ID{
+					Name: "default",
+					Type: pbhcp.LinkType,
+				},
+				Metadata: map[string]string{
+					"source": "config",
+				},
+				Data: data,
+			},
+		},
+	)
+	if err != nil {
+		if strings.Contains(err.Error(), storage.ErrWrongUid.Error()) {
+			// Ignore wrong UID errors, which indicates the link already exists
+			return nil
+		}
 		return err
 	}
 

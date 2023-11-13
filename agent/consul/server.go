@@ -937,7 +937,8 @@ func isV1CatalogRequest(rpcName string) bool {
 
 func (s *Server) registerControllers(deps Deps, proxyUpdater ProxyUpdater) error {
 	hcpctl.RegisterControllers(s.controllerManager, hcpctl.ControllerDependencies{
-		Manager: s.hcpManager,
+		Manager:    s.hcpManager,
+		Configured: s.config.Cloud.ManagementToken != "", // TODO: Use a better check to determine if configured
 	})
 
 	// When not enabled, the v1 tenancy bridge is used by default.

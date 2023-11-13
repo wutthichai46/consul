@@ -131,6 +131,7 @@ type Controller struct {
 	baseBackoff   time.Duration
 	maxBackoff    time.Duration
 	placement     Placement
+	initializer   Initializer
 }
 
 type watch struct {
@@ -257,4 +258,13 @@ func RequeueAfter(after time.Duration) error {
 // immediately.
 func RequeueNow() error {
 	return RequeueAfterError(0)
+}
+
+type Initializer interface {
+	Initialize(ctx context.Context, rt Runtime) error
+}
+
+func (c Controller) WithInitializer(initializer Initializer) Controller {
+	c.initializer = initializer
+	return c
 }
