@@ -841,9 +841,3 @@ func newRefWithTenancy(typ *pbresource.Type, tenancyStr, name string) *pbresourc
 		WithTenancy(resourcetest.Tenancy(tenancyStr)).
 		Reference("")
 }
-
-func newRefWithPeer(typ *pbresource.Type, name string, peer string) *pbresource.Reference {
-	ref := newRef(typ, name)
-	ref.Tenancy.PeerName = peer
-	return ref
-}

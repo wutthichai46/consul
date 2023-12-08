@@ -23,7 +23,6 @@ func resourceID(group string, version string, kind string, name string) *pbresou
 		Tenancy: &pbresource.Tenancy{
 			Partition: "default",
 			Namespace: "default",
-			PeerName:  "local",
 		},
 		Name: name,
 	}
@@ -110,7 +109,6 @@ func TestReplaceType(t *testing.T) {
 	tenant := &pbresource.Tenancy{
 		Partition: "not",
 		Namespace: "using",
-		PeerName:  "the-defaults",
 	}
 
 	in := &pbresource.Resource{

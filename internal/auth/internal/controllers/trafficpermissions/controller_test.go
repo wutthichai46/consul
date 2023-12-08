@@ -101,7 +101,7 @@ func (suite *controllerSuite) TestReconcile_CTPCreate_ReferencingTrafficPermissi
 					IdentityName: "foo",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp1 := rtest.Resource(pbauth.TrafficPermissionsType, "tp1").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -125,7 +125,7 @@ func (suite *controllerSuite) TestReconcile_CTPCreate_ReferencingTrafficPermissi
 					IdentityName: "wi2",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp2 := rtest.Resource(pbauth.TrafficPermissionsType, "tp2").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -161,7 +161,7 @@ func (suite *controllerSuite) TestReconcile_WorkloadIdentityDelete_ReferencingTr
 					IdentityName: "foo",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp1 := rtest.Resource(pbauth.TrafficPermissionsType, "tp1").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -185,7 +185,7 @@ func (suite *controllerSuite) TestReconcile_WorkloadIdentityDelete_ReferencingTr
 					IdentityName: "wi2",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp2 := rtest.Resource(pbauth.TrafficPermissionsType, "tp2").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -256,7 +256,7 @@ func (suite *controllerSuite) TestReconcile_TrafficPermissionsCreate_Destination
 					IdentityName: "foo",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp1 := rtest.Resource(pbauth.TrafficPermissionsType, "tp1").WithTenancy(tenancy).WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -274,7 +274,7 @@ func (suite *controllerSuite) TestReconcile_TrafficPermissionsCreate_Destination
 					IdentityName: "wi2",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp2 := rtest.Resource(pbauth.TrafficPermissionsType, "tp2").WithTenancy(tenancy).WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -302,7 +302,7 @@ func (suite *controllerSuite) TestReconcile_TrafficPermissionsCreate_Destination
 					IdentityName: "wi3",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp3 := rtest.Resource(pbauth.TrafficPermissionsType, "tp3").WithTenancy(tenancy).WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -354,7 +354,7 @@ func (suite *controllerSuite) TestReconcile_TrafficPermissionsDelete_Destination
 					IdentityName: "foo",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp1 := rtest.Resource(pbauth.TrafficPermissionsType, "tp1").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -373,7 +373,7 @@ func (suite *controllerSuite) TestReconcile_TrafficPermissionsDelete_Destination
 					IdentityName: "wi2",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp2 := rtest.Resource(pbauth.TrafficPermissionsType, "tp2").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -420,7 +420,7 @@ func (suite *controllerSuite) TestReconcile_TrafficPermissionsDelete_Destination
 					IdentityName: "foo",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp1 := rtest.Resource(pbauth.TrafficPermissionsType, "tp1").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -444,7 +444,7 @@ func (suite *controllerSuite) TestReconcile_TrafficPermissionsDelete_Destination
 					IdentityName: "wi2",
 					Namespace:    "default",
 					Partition:    "default",
-					Peer:         "local",
+					Peer:         resource.DefaultPeerName,
 				}},
 		}
 		tp2 := rtest.Resource(pbauth.TrafficPermissionsType, "tp2").WithData(suite.T(), &pbauth.TrafficPermissions{
@@ -499,7 +499,7 @@ func (suite *controllerSuite) TestControllerBasic() {
 				IdentityName: "wi2",
 				Namespace:    "default",
 				Partition:    "default",
-				Peer:         "local",
+				Peer:         resource.DefaultPeerName,
 			}},
 			DestinationRules: nil,
 		}
@@ -525,7 +525,7 @@ func (suite *controllerSuite) TestControllerBasic() {
 				IdentityName: "wi1",
 				Namespace:    "default",
 				Partition:    "default",
-				Peer:         "local",
+				Peer:         resource.DefaultPeerName,
 			}},
 			DestinationRules: nil,
 		}
@@ -630,7 +630,7 @@ func (suite *controllerSuite) TestControllerBasicWithMultipleTenancyLevels() {
 			IdentityName: "wi2",
 			Namespace:    "bar",
 			Partition:    "foo",
-			Peer:         "local",
+			Peer:         resource.DefaultPeerName,
 		}},
 		DestinationRules: nil,
 	}
@@ -656,7 +656,7 @@ func (suite *controllerSuite) TestControllerBasicWithMultipleTenancyLevels() {
 			IdentityName: "wi2",
 			Namespace:    "default",
 			Partition:    "default",
-			Peer:         "local",
+			Peer:         resource.DefaultPeerName,
 		}},
 		DestinationRules: nil,
 	}
@@ -725,7 +725,7 @@ func (suite *controllerSuite) TestControllerMultipleTrafficPermissions() {
 				IdentityName: "wi2",
 				Namespace:    tenancy.Namespace,
 				Partition:    tenancy.Partition,
-				Peer:         "local",
+				Peer:         resource.DefaultPeerName,
 			}},
 			DestinationRules: nil,
 		}
@@ -743,7 +743,7 @@ func (suite *controllerSuite) TestControllerMultipleTrafficPermissions() {
 				IdentityName: "wi3",
 				Namespace:    tenancy.Namespace,
 				Partition:    tenancy.Partition,
-				Peer:         "local",
+				Peer:         resource.DefaultPeerName,
 			}},
 			DestinationRules: nil,
 		}
@@ -773,7 +773,7 @@ func (suite *controllerSuite) TestControllerMultipleTrafficPermissions() {
 				IdentityName: "wi4",
 				Namespace:    tenancy.Namespace,
 				Partition:    tenancy.Partition,
-				Peer:         "local",
+				Peer:         resource.DefaultPeerName,
 			}},
 			DestinationRules: nil,
 		}

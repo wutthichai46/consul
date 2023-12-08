@@ -15,7 +15,6 @@ import (
 	"github.com/hashicorp/consul/internal/catalog"
 	"github.com/hashicorp/consul/internal/controller"
 	"github.com/hashicorp/consul/internal/multicluster/internal/types"
-	"github.com/hashicorp/consul/internal/resource"
 	rtest "github.com/hashicorp/consul/internal/resource/resourcetest"
 	pbcatalog "github.com/hashicorp/consul/proto-public/pbcatalog/v2beta1"
 	pbmulticluster "github.com/hashicorp/consul/proto-public/pbmulticluster/v2beta1"
@@ -314,7 +313,6 @@ func getExpectation(tenancy *pbresource.Tenancy, isEnterprise bool, testCase int
 		Tenancy: &pbresource.Tenancy{
 			Partition: tenancy.Partition,
 			Namespace: "app",
-			PeerName:  resource.DefaultPeerName,
 		},
 		Name: "svc0",
 	}
@@ -338,7 +336,6 @@ func getExpectation(tenancy *pbresource.Tenancy, isEnterprise bool, testCase int
 		Tenancy: &pbresource.Tenancy{
 			Partition: tenancy.Partition,
 			Namespace: "app",
-			PeerName:  resource.DefaultPeerName,
 		},
 		Name: "svc4",
 	}

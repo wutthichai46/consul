@@ -207,8 +207,7 @@
     "name": "test-identity",
     "tenancy": {
       "namespace": "default",
-      "partition": "default",
-      "peerName": "local"
+      "partition": "default"
     },
     "type": {
       "group": "auth",

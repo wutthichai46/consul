@@ -186,10 +186,10 @@ type Request struct {
 // Key satisfies the queue.ItemType interface. It returns a string which will be
 // used to de-duplicate requests in the queue.
 func (r Request) Key() string {
+	// TODO(peering/v2) update controller request key to include peer tenancy
 	return fmt.Sprintf(
-		"part=%q,peer=%q,ns=%q,name=%q,uid=%q",
+		"part=%q,ns=%q,name=%q,uid=%q",
 		r.ID.Tenancy.Partition,
-		r.ID.Tenancy.PeerName,
 		r.ID.Tenancy.Namespace,
 		r.ID.Name,
 		r.ID.Uid,

@@ -24,7 +24,6 @@ func createDNSPolicyResource(t *testing.T, data protoreflect.ProtoMessage) *pbre
 			Tenancy: &pbresource.Tenancy{
 				Partition: "default",
 				Namespace: "default",
-				PeerName:  "local",
 			},
 			Name: "test-policy",
 		},

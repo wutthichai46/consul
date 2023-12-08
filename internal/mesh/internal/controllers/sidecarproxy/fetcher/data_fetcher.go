@@ -228,7 +228,6 @@ func (f *Fetcher) FetchImplicitDestinationsData(
 		Tenancy: &pbresource.Tenancy{
 			Namespace: storage.Wildcard,
 			Partition: proxyID.Tenancy.Partition,
-			PeerName:  proxyID.Tenancy.PeerName,
 		},
 	})
 	if err != nil {

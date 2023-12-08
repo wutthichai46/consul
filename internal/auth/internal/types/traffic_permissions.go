@@ -50,16 +50,25 @@ func normalizedTenancyForSource(src *pbauth.Source, parentTenancy *pbresource.Te
 
 	if t, c := defaultedSourceTenancy(src, parentTenancy); c {
 		src.Partition = t.Partition
-		src.Peer = t.PeerName
 		src.Namespace = t.Namespace
+		changed = true
+	}
+
+	// TODO(peering/v2) allow for non-default peer names in traffic permission sources
+	if src.Peer != resource.DefaultPeerName {
+		src.Peer = resource.DefaultPeerName
 		changed = true
 	}
 
 	for _, e := range src.Exclude {
 		if t, c := defaultedSourceTenancy(e, parentTenancy); c {
 			e.Partition = t.Partition
-			e.Peer = t.PeerName
 			e.Namespace = t.Namespace
+			changed = true
+		}
+
+		if e.Peer != resource.DefaultPeerName {
+			e.Peer = resource.DefaultPeerName
 			changed = true
 		}
 	}
@@ -74,9 +83,6 @@ func defaultedSourceTenancy(s pbauth.SourceToSpiffe, parentTenancy *pbresource.T
 
 	tenancy := pbauth.SourceToTenancy(s)
 
-	var peerChanged bool
-	tenancy.PeerName, peerChanged = firstNonEmptyString(tenancy.PeerName, parentTenancy.PeerName, resource.DefaultPeerName)
-
 	var partitionChanged bool
 	tenancy.Partition, partitionChanged = firstNonEmptyString(tenancy.Partition, parentTenancy.Partition, resource.DefaultPartitionName)
 
@@ -89,7 +95,7 @@ func defaultedSourceTenancy(s pbauth.SourceToSpiffe, parentTenancy *pbresource.T
 		}
 	}
 
-	return tenancy, peerChanged || partitionChanged || namespaceChanged
+	return tenancy, partitionChanged || namespaceChanged
 }
 
 func firstNonEmptyString(a, b, c string) (string, bool) {
@@ -272,7 +278,7 @@ func sourceHasIncompatibleTenancies(src pbauth.SourceToSpiffe) bool {
 }
 
 func isLocalPeer(p string) bool {
-	return p == "local" || p == ""
+	return p == resource.DefaultPeerName || p == ""
 }
 
 func aclReadHookTrafficPermissions(authorizer acl.Authorizer, authzContext *acl.AuthorizerContext, res *DecodedTrafficPermissions) error {

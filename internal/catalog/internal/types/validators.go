@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"github.com/hashicorp/go-multierror"
-	"google.golang.org/protobuf/proto"
 
 	"github.com/hashicorp/consul/internal/resource"
 	pbcatalog "github.com/hashicorp/consul/proto-public/pbcatalog/v2beta1"
@@ -205,9 +204,7 @@ func validateWorkloadAddress(addr *pbcatalog.WorkloadAddress, ports map[string]*
 }
 
 func validateReferenceType(allowed *pbresource.Type, check *pbresource.Type) error {
-	if allowed.Group == check.Group &&
-		allowed.GroupVersion == check.GroupVersion &&
-		allowed.Kind == check.Kind {
+	if resource.EqualType(allowed, check) {
 		return nil
 	}
 
@@ -217,7 +214,7 @@ func validateReferenceType(allowed *pbresource.Type, check *pbresource.Type) err
 }
 
 func validateReferenceTenancy(allowed *pbresource.Tenancy, check *pbresource.Tenancy) error {
-	if proto.Equal(allowed, check) {
+	if resource.EqualTenancy(allowed, check) {
 		return nil
 	}
 
@@ -311,15 +308,7 @@ func ValidateLocalServiceRefNoSection(ref *pbresource.Reference, wrapErr func(er
 				},
 			}))
 		}
-		if ref.Tenancy.PeerName != "local" {
-			merr = multierror.Append(merr, wrapErr(resource.ErrInvalidField{
-				Name: "tenancy",
-				Wrapped: resource.ErrInvalidField{
-					Name:    "peer_name",
-					Wrapped: errors.New(`must be set to "local"`),
-				},
-			}))
-		}
+		// TODO(peering/v2): Add validation that local references don't specify another peer
 	}
 
 	if ref.Name == "" {

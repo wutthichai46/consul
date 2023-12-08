@@ -129,8 +129,7 @@
       "name": "test-identity",
       "tenancy": {
         "namespace": "default",
-        "partition": "default",
-        "peerName": "local"
+        "partition": "default"
       },
       "type": {
         "group": "auth",
@@ -245,8 +244,7 @@
         "name": "api-1",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -261,8 +259,7 @@
         "name": "api-2",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -277,8 +274,7 @@
         "name": "api-1",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -293,8 +289,7 @@
         "name": "api-2",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",

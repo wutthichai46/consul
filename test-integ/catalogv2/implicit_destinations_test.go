@@ -139,7 +139,6 @@ func (c testBasicL4ImplicitDestinationsCreator) topologyConfigAddNodes(
 	tenancy := &pbresource.Tenancy{
 		Partition: partition,
 		Namespace: namespace,
-		PeerName:  "local",
 	}
 
 	serverNode := &topology.Node{

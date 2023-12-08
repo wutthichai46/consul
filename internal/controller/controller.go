@@ -236,11 +236,11 @@ type mapperRequest struct{ res *pbresource.Resource }
 // Key satisfies the queue.ItemType interface. It returns a string which will be
 // used to de-duplicate requests in the queue.
 func (i mapperRequest) Key() string {
+	// TODO(peering/v2) update mapper request key to include peer tenancy
 	return fmt.Sprintf(
-		"type=%q,part=%q,peer=%q,ns=%q,name=%q,uid=%q",
+		"type=%q,part=%q,ns=%q,name=%q,uid=%q",
 		resource.ToGVK(i.res.Id.Type),
 		i.res.Id.Tenancy.Partition,
-		i.res.Id.Tenancy.PeerName,
 		i.res.Id.Tenancy.Namespace,
 		i.res.Id.Name,
 		i.res.Id.Uid,

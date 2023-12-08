@@ -185,8 +185,7 @@
       "name": "test-identity",
       "tenancy": {
         "namespace": "default",
-        "partition": "default",
-        "peerName": "local"
+        "partition": "default"
       },
       "type": {
         "group": "auth",
@@ -388,8 +387,7 @@
         "name": "api-app",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -404,8 +402,7 @@
         "name": "api-app2",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -420,8 +417,7 @@
         "name": "api-app",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -436,8 +432,7 @@
         "name": "api-app2",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -452,8 +447,7 @@
         "name": "api-app",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",
@@ -468,8 +462,7 @@
         "name": "api-app2",
         "tenancy": {
           "namespace": "default",
-          "partition": "default",
-          "peerName": "local"
+          "partition": "default"
         },
         "type": {
           "group": "catalog",

@@ -185,8 +185,7 @@
       "name": "test-identity",
       "tenancy": {
         "namespace": "bar",
-        "partition": "foo",
-        "peerName": "local"
+        "partition": "foo"
       },
       "type": {
         "group": "auth",
@@ -255,7 +254,7 @@
           {
             "l7": {
               "route": {
-                "name": "foo/local/bar/api-app:http"
+                "name": "foo/bar/api-app:http"
               },
               "statPrefix": "upstream.http.api-app.bar.foo.dc1"
             },
@@ -272,7 +271,7 @@
           {
             "l7": {
               "route": {
-                "name": "foo/local/bar/api-app2:http"
+                "name": "foo/bar/api-app2:http"
               },
               "statPrefix": "upstream.http.api-app2.bar.foo.dc1"
             },
@@ -332,13 +331,13 @@
       }
     ],
     "routes": {
-      "foo/local/bar/api-app2:http": {
+      "foo/bar/api-app2:http": {
         "virtualHosts": [
           {
             "domains": [
               "*"
             ],
-            "name": "foo/local/bar/api-app2:http",
+            "name": "foo/bar/api-app2:http",
             "routeRules": [
               {
                 "destination": {
@@ -356,13 +355,13 @@
           }
         ]
       },
-      "foo/local/bar/api-app:http": {
+      "foo/bar/api-app:http": {
         "virtualHosts": [
           {
             "domains": [
               "*"
             ],
-            "name": "foo/local/bar/api-app:http",
+            "name": "foo/bar/api-app:http",
             "routeRules": [
               {
                 "destination": {
@@ -388,8 +387,7 @@
         "name": "api-app",
         "tenancy": {
           "namespace": "bar",
-          "partition": "foo",
-          "peerName": "local"
+          "partition": "foo"
         },
         "type": {
           "group": "catalog",
@@ -404,8 +402,7 @@
         "name": "api-app2",
         "tenancy": {
           "namespace": "bar",
-          "partition": "foo",
-          "peerName": "local"
+          "partition": "foo"
         },
         "type": {
           "group": "catalog",
@@ -420,8 +417,7 @@
         "name": "api-app",
         "tenancy": {
           "namespace": "bar",
-          "partition": "foo",
-          "peerName": "local"
+          "partition": "foo"
         },
         "type": {
           "group": "catalog",
@@ -436,8 +432,7 @@
         "name": "api-app2",
         "tenancy": {
           "namespace": "bar",
-          "partition": "foo",
-          "peerName": "local"
+          "partition": "foo"
         },
         "type": {
           "group": "catalog",
@@ -452,8 +447,7 @@
         "name": "api-app",
         "tenancy": {
           "namespace": "bar",
-          "partition": "foo",
-          "peerName": "local"
+          "partition": "foo"
         },
         "type": {
           "group": "catalog",
@@ -468,8 +462,7 @@
         "name": "api-app2",
         "tenancy": {
           "namespace": "bar",
-          "partition": "foo",
-          "peerName": "local"
+          "partition": "foo"
         },
         "type": {
           "group": "catalog",

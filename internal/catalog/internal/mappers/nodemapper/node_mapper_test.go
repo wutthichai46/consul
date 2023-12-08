@@ -70,7 +70,6 @@ func TestNodeMapper_WorkloadTracking(t *testing.T) {
 	tenant := &pbresource.Tenancy{
 		Partition: "default",
 		Namespace: "default",
-		PeerName:  "local",
 	}
 
 	workload1 := &pbresource.ID{Type: pbcatalog.WorkloadType, Tenancy: tenant, Name: "workload1"}

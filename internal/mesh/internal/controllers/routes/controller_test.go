@@ -58,7 +58,7 @@ func (suite *controllerSuite) TestController() {
 	suite.runTestCaseWithTenancies(func(tenancy *pbresource.Tenancy) {
 
 		backendName := func(name, port string) string {
-			return fmt.Sprintf("catalog.v2beta1.Service/%s.local.%s/%s?port=%s", tenancy.Partition, tenancy.Namespace, name, port)
+			return fmt.Sprintf("catalog.v2beta1.Service/%s.%s/%s?port=%s", tenancy.Partition, tenancy.Namespace, name, port)
 		}
 
 		var (

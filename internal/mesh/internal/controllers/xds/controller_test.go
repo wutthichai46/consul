@@ -809,7 +809,7 @@ func (suite *xdsControllerTestSuite) setupFooProxyStateTemplateWithReferences(te
 	}
 
 	expectedTrustBundle := map[string]*pbproxystate.TrustBundle{
-		"local": {
+		resource.DefaultPeerName: {
 			TrustDomain: "some-trust-domain",
 			Roots:       []string{"some-root", "some-other-root"},
 		},

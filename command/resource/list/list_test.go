@@ -49,7 +49,6 @@ func TestResourceListCommand(t *testing.T) {
 			extraArgs: []string{
 				"demo.v2.artist",
 				"-namespace=default",
-				"-peer=local",
 				"-partition=default",
 			},
 		},
@@ -131,7 +130,6 @@ func TestResourceListInvalidArgs(t *testing.T) {
 			args: []string{
 				"demo.v2.artist",
 				"-namespace=default",
-				"-peer=local",
 				"-partition=default",
 				"-http-addr=" + a.HTTPAddr(),
 				"-token=root",
@@ -144,7 +142,6 @@ func TestResourceListInvalidArgs(t *testing.T) {
 			args: []string{
 				"test",
 				"-namespace=default",
-				"-peer=local",
 				"-partition=default",
 			},
 			expectedCode: 1,
@@ -155,7 +152,6 @@ func TestResourceListInvalidArgs(t *testing.T) {
 				"demo.v2.artist",
 				"test",
 				"-namespace=default",
-				"-peer=local",
 				"-partition=default",
 			},
 			expectedCode: 1,

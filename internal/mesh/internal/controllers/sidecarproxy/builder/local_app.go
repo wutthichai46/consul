@@ -6,6 +6,7 @@ package builder
 import (
 	"fmt"
 
+	"github.com/hashicorp/consul/internal/resource"
 	pbmesh "github.com/hashicorp/consul/proto-public/pbmesh/v2beta1"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
@@ -481,7 +482,7 @@ func (l *ListenerBuilder) addInboundTLS() *ListenerBuilder {
 			InboundMesh: &pbproxystate.InboundMeshMTLS{
 				IdentityKey: workloadIdentity,
 				ValidationContext: &pbproxystate.MeshInboundValidationContext{
-					TrustBundlePeerNameKeys: []string{l.builder.id.Tenancy.PeerName},
+					TrustBundlePeerNameKeys: []string{resource.DefaultPeerName},
 				},
 			},
 		},

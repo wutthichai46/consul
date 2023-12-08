@@ -245,17 +245,18 @@ func permissionsTestCases() map[string]permissionTestCase {
 			},
 			expectErr: `invalid "exclude_sources" field: must be defined on wildcard sources`,
 		},
-		"source-partition-and-peer": {
-			p: &pbauth.Permission{
-				Sources: []*pbauth.Source{
-					{
-						Partition: "ap1",
-						Peer:      "cluster-01",
-					},
-				},
-			},
-			expectErr: `permissions sources may not specify partitions, peers, and sameness_groups together`,
-		},
+		// TODO(peering/v2) uncomment once we don't force the peer to be "local"
+		// "source-partition-and-peer": {
+		// 	p: &pbauth.Permission{
+		// 		Sources: []*pbauth.Source{
+		// 			{
+		// 				Partition: "ap1",
+		// 				Peer:      "cluster-01",
+		// 			},
+		// 		},
+		// 	},
+		// 	expectErr: `permissions sources may not specify partitions, peers, and sameness_groups together`,
+		// },
 		"source-partition-and-sameness-group": {
 			p: &pbauth.Permission{
 				Sources: []*pbauth.Source{
@@ -278,21 +279,22 @@ func permissionsTestCases() map[string]permissionTestCase {
 			},
 			expectErr: `permissions sources may not specify partitions, peers, and sameness_groups together`,
 		},
-		"exclude-source-partition-and-peer": {
-			p: &pbauth.Permission{
-				Sources: []*pbauth.Source{
-					{
-						Exclude: []*pbauth.ExcludeSource{
-							{
-								Partition: "ap1",
-								Peer:      "cluster-01",
-							},
-						},
-					},
-				},
-			},
-			expectErr: `permissions sources may not specify partitions, peers, and sameness_groups together`,
-		},
+		// TODO(peering/v2) uncomment once we don't force the peer to be "local"
+		// "exclude-source-partition-and-peer": {
+		// 	p: &pbauth.Permission{
+		// 		Sources: []*pbauth.Source{
+		// 			{
+		// 				Exclude: []*pbauth.ExcludeSource{
+		// 					{
+		// 						Partition: "ap1",
+		// 						Peer:      "cluster-01",
+		// 					},
+		// 				},
+		// 			},
+		// 		},
+		// 	},
+		// 	expectErr: `permissions sources may not specify partitions, peers, and sameness_groups together`,
+		// },
 		"exclude-source-partition-and-sameness-group": {
 			p: &pbauth.Permission{
 				Sources: []*pbauth.Source{
@@ -423,7 +425,7 @@ func TestMutateTrafficPermissions(t *testing.T) {
 							{
 								IdentityName: "i1",
 								Namespace:    "ns1",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 						},
 					},
@@ -435,27 +437,28 @@ func TestMutateTrafficPermissions(t *testing.T) {
 						Sources: []*pbauth.Source{
 							{
 								Partition: "default",
-								Peer:      "local",
+								Peer:      resource.DefaultPeerName,
 							},
 							{
-								Peer: "not-default",
+								// TODO(peering/v2) update test to allow for the non-default peer name
+								Peer: resource.DefaultPeerName,
 							},
 							{
 								Namespace: "ns1",
 								Partition: "default",
-								Peer:      "local",
+								Peer:      resource.DefaultPeerName,
 							},
 							{
 								IdentityName: "i1",
 								Namespace:    "ns1",
 								Partition:    "ap1",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 							{
 								IdentityName: "i1",
 								Namespace:    "ns1",
 								Partition:    "default",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 						},
 					},
@@ -484,7 +487,7 @@ func TestMutateTrafficPermissions(t *testing.T) {
 									{
 										IdentityName: "i1",
 										Namespace:    "ns1",
-										Peer:         "local",
+										Peer:         resource.DefaultPeerName,
 									},
 								},
 							},
@@ -498,31 +501,32 @@ func TestMutateTrafficPermissions(t *testing.T) {
 						Sources: []*pbauth.Source{
 							{
 								Partition: "default",
-								Peer:      "local",
+								Peer:      resource.DefaultPeerName,
 								Exclude: []*pbauth.ExcludeSource{
 									{
 										Partition: "default",
-										Peer:      "local",
+										Peer:      resource.DefaultPeerName,
 									},
 									{
-										Peer: "not-default",
+										// TODO(peering/v2) update test to allow for the non-default peer name
+										Peer: resource.DefaultPeerName,
 									},
 									{
 										Namespace: "ns1",
 										Partition: "default",
-										Peer:      "local",
+										Peer:      resource.DefaultPeerName,
 									},
 									{
 										IdentityName: "i1",
 										Namespace:    "ns1",
 										Partition:    "ap1",
-										Peer:         "local",
+										Peer:         resource.DefaultPeerName,
 									},
 									{
 										IdentityName: "i1",
 										Namespace:    "ns1",
 										Partition:    "default",
-										Peer:         "local",
+										Peer:         resource.DefaultPeerName,
 									},
 								},
 							},
@@ -535,7 +539,6 @@ func TestMutateTrafficPermissions(t *testing.T) {
 			policyTenancy: &pbresource.Tenancy{
 				Partition: "ap1",
 				Namespace: "ns3",
-				PeerName:  "local",
 			},
 			tp: &pbauth.TrafficPermissions{
 				Permissions: []*pbauth.Permission{
@@ -556,7 +559,7 @@ func TestMutateTrafficPermissions(t *testing.T) {
 							{
 								IdentityName: "i1",
 								Namespace:    "ns1",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 							{
 								IdentityName: "i2",
@@ -576,39 +579,40 @@ func TestMutateTrafficPermissions(t *testing.T) {
 							{
 								Partition: "ap1",
 								Namespace: "",
-								Peer:      "local",
+								Peer:      resource.DefaultPeerName,
 							},
 							{
-								Peer: "not-default",
+								// TODO(peering/v2) update test to allow for the non-default peer name
+								Peer: resource.DefaultPeerName,
 							},
 							{
 								Namespace: "ns1",
 								Partition: "ap1",
-								Peer:      "local",
+								Peer:      resource.DefaultPeerName,
 							},
 							{
 								IdentityName: "i1",
 								Namespace:    "ns1",
 								Partition:    "ap5",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 							{
 								IdentityName: "i1",
 								Namespace:    "ns1",
 								Partition:    "ap1",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 							{
 								IdentityName: "i2",
 								Namespace:    "ns3",
 								Partition:    "ap1",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 							{
 								IdentityName: "i2",
 								Namespace:    "default",
 								Partition:    "non-default",
-								Peer:         "local",
+								Peer:         resource.DefaultPeerName,
 							},
 						},
 					},
@@ -619,7 +623,6 @@ func TestMutateTrafficPermissions(t *testing.T) {
 			policyTenancy: &pbresource.Tenancy{
 				Partition: "ap1",
 				Namespace: "ns3",
-				PeerName:  "local",
 			},
 			tp: &pbauth.TrafficPermissions{
 				Permissions: []*pbauth.Permission{
@@ -642,7 +645,7 @@ func TestMutateTrafficPermissions(t *testing.T) {
 									{
 										IdentityName: "i1",
 										Namespace:    "ns1",
-										Peer:         "local",
+										Peer:         resource.DefaultPeerName,
 									},
 									{
 										IdentityName: "i2",
@@ -659,38 +662,39 @@ func TestMutateTrafficPermissions(t *testing.T) {
 						Sources: []*pbauth.Source{
 							{
 								Partition: "ap1",
-								Peer:      "local",
+								Peer:      resource.DefaultPeerName,
 								Exclude: []*pbauth.ExcludeSource{
 									{
 										Partition: "ap1",
 										Namespace: "",
-										Peer:      "local",
+										Peer:      resource.DefaultPeerName,
 									},
 									{
-										Peer: "not-default",
+										// TODO(peering/v2) update test to allow for the non-default peer name
+										Peer: resource.DefaultPeerName,
 									},
 									{
 										Namespace: "ns1",
 										Partition: "ap1",
-										Peer:      "local",
+										Peer:      resource.DefaultPeerName,
 									},
 									{
 										IdentityName: "i1",
 										Namespace:    "ns1",
 										Partition:    "ap5",
-										Peer:         "local",
+										Peer:         resource.DefaultPeerName,
 									},
 									{
 										IdentityName: "i1",
 										Namespace:    "ns1",
 										Partition:    "ap1",
-										Peer:         "local",
+										Peer:         resource.DefaultPeerName,
 									},
 									{
 										IdentityName: "i2",
 										Namespace:    "ns3",
 										Partition:    "ap1",
-										Peer:         "local",
+										Peer:         resource.DefaultPeerName,
 									},
 								},
 							},
