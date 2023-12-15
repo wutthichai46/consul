@@ -193,6 +193,28 @@ func wildcardTenancyCases() map[string]struct {
 				Partition: "*",
 			},
 		},
+		"partitioned type with wildcard partition and namespace": {
+			typ: demo.TypeV1RecordLabel,
+			tenancy: &pbresource.Tenancy{
+				Partition: "*",
+				Namespace: "*",
+			},
+		},
+		"cluster type with empty partition and namespace": {
+			typ: demo.TypeV1Executive,
+			tenancy: &pbresource.Tenancy{
+				Partition: "",
+				Namespace: "",
+			},
+		},
+
+		"cluster type with wildcard partition and namespace": {
+			typ: demo.TypeV1Executive,
+			tenancy: &pbresource.Tenancy{
+				Partition: "*",
+				Namespace: "*",
+			},
+		},
 	}
 }
 
