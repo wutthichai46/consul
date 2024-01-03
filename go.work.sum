@@ -146,8 +146,6 @@ github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/ad
 github.com/graph-gophers/graphql-go v1.3.0/go.mod h1:9CQHMSxwO4MprSdzoIEobiHpoLtHm77vfxsvsIN5Vuc=
 github.com/gulducat/go-run-programs v0.1.0/go.mod h1:6BIzJV6kUmQC9oWm1umtjUN6x2+9xNe22suw1M9aq+A=
 github.com/hashicorp/consul v1.16.1/go.mod h1:GH3Ybk4rNKf0wVLfwG3btwPilh+sMwGtvymgFqFRqp0=
-github.com/hashicorp/consul v1.17.1/go.mod h1:8Np4IqqxKiQVJgEbCY7cUrSGmAbXBkw5kg6CCaKl2mI=
-github.com/hashicorp/consul/testing/deployer v0.0.0-20230811171106-4a0afb5d1373/go.mod h1:pgMkKWxLXj5cbNKoJ3BWhDtjSjswvL2mrr7JsTlZxWs=
 github.com/hashicorp/consul/troubleshoot v0.4.1/go.mod h1:2Ca1f4r4HZkO8NwtGBJ/9YX6EUgwWrZtvUnxB3UZuAA=
 github.com/hashicorp/go-hclog v0.0.0-20180709165350-ff2cf002a8dd/go.mod h1:9bjs9uLqI8l75knNv3lV1kA55veR+WUPSiKIWcQHudI=
 github.com/hashicorp/go-hclog v1.3.1/go.mod h1:W4Qnvbt70Wk/zYJryRzDRU/4r0kIg0PVHBcfoyhpF5M=
@@ -162,6 +160,7 @@ github.com/hashicorp/hcl/v2 v2.14.1/go.mod h1:e4z5nxYlWNPdDSNYX+ph14EvWYMFm3eP0z
 github.com/hashicorp/mdns v1.0.0/go.mod h1:tL+uN++7HEJ6SQLQ2/p+z2pH24WQKWjBPkE0mNTz8vQ=
 github.com/hashicorp/memberlist v0.1.3/go.mod h1:ajVTdAv/9Im8oMAAj5G31PhhMCZJV2pPBoIllUwCN7I=
 github.com/hashicorp/memberlist v0.1.6/go.mod h1:5VDNHjqFMgEcclnwmkCnC99IPwxBmIsxwY8qn+Nl0H4=
+github.com/hashicorp/net-rpc-msgpackrpc v0.0.0-20151116020338-a14192a58a69/go.mod h1:/z+jUGRBlwVpUZfjute9jWaF6/HuhjuFQuL1YXzVD1Q=
 github.com/hashicorp/serf v0.8.6/go.mod h1:P/AVgr4UHsUYqVHG1y9eFhz8S35pqhGhLZaDpfGKIMo=
 github.com/hashicorp/vault/api v1.1.0/go.mod h1:R3Umvhlxi2TN7Ex2hzOowyeNb+SfbVWI973N+ctaFMk=
 github.com/hashicorp/vault/sdk v0.1.14-0.20200519221838-e0cfd64bc267/go.mod h1:WX57W2PwkrOPQ6rVQk+dy5/htHIaB4aBM70EwKThu10=
