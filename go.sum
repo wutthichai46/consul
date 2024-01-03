@@ -493,8 +493,12 @@ github.com/hashicorp/consul/api v1.26.1 h1:5oSXOO5fboPZeW5SN+TdGFP/BILDgBm19OrPZ
 github.com/hashicorp/consul/api v1.26.1/go.mod h1:B4sQTeaSO16NtynqrAdwOlahJ7IUDZM9cj2420xYL8A=
 github.com/hashicorp/consul/envoyextensions v0.5.1 h1:W5vkAKr60r3NUa7JjGZU6obTYms9PWgtEKB+MB+90YI=
 github.com/hashicorp/consul/envoyextensions v0.5.1/go.mod h1:M/VMPmhwjksu66pxQ6RBKkQEI7Qn6RM8hSnIoJUgskI=
+github.com/hashicorp/consul/proto-public v0.1.2-0.20240102192105-44dfbe7dcb7f h1:ILyOea4oK29f0CMa0vsr+q9BvpR77oG5UH9N3tkgTjY=
+github.com/hashicorp/consul/proto-public v0.1.2-0.20240102192105-44dfbe7dcb7f/go.mod h1:ar/M/Gv31GeE7DxektZgAydwsCiOf6sBeJFcjQVTlVs=
 github.com/hashicorp/consul/sdk v0.15.0 h1:2qK9nDrr4tiJKRoxPGhm6B7xJjLVIQqkjiab2M4aKjU=
 github.com/hashicorp/consul/sdk v0.15.0/go.mod h1:r/OmRRPbHOe0yxNahLw7G9x5WG17E1BIECMtCjcPSNo=
+github.com/hashicorp/consul/troubleshoot v0.0.0-20240103162905-3b94efa8debc h1:mfM45GYixq9JY29pH6SFtcjy7R5TCOgI4JAdmETg3WI=
+github.com/hashicorp/consul/troubleshoot v0.0.0-20240103162905-3b94efa8debc/go.mod h1:3eCfK8BYhn32ybH6m+G3vcktrelG/nSu59o4nAQaz3o=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/errwrap v1.1.0 h1:OxrOeh75EUXMY8TBjag2fzXGZ40LB6IKw45YeGUDY2I=
 github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
