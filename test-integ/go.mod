@@ -120,13 +120,3 @@ require (
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 )
-
-replace (
-	github.com/hashicorp/consul => ../
-	github.com/hashicorp/consul/api => ../api
-	github.com/hashicorp/consul/envoyextensions => ../envoyextensions
-	github.com/hashicorp/consul/proto-public => ../proto-public
-	github.com/hashicorp/consul/sdk => ../sdk
-	github.com/hashicorp/consul/test/integration/consul-container => ../test/integration/consul-container
-	github.com/hashicorp/consul/testing/deployer => ../testing/deployer
-)
