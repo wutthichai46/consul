@@ -1,0 +1,15 @@
+go 1.21.5
+
+use (
+	.
+	./api
+	./envoyextensions
+	./internal/tools/proto-gen-rpc-glue
+	./internal/tools/protoc-gen-consul-rate-limit
+	./proto-public
+	./sdk
+	./test/integration/connect/envoy/test-sds-server
+	./test/integration/consul-container
+	./testing/deployer
+	./troubleshoot
+)

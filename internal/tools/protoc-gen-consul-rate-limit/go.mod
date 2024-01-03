@@ -3,7 +3,7 @@ module github.com/hashicorp/consul/internal/tools/protoc-gen-consul-rate-limit
 go 1.19
 
 require (
-	github.com/hashicorp/consul/proto-public v0.0.0-00010101000000-000000000000
+	github.com/hashicorp/consul/proto-public v0.5.1
 	google.golang.org/protobuf v1.31.0
 )
 
