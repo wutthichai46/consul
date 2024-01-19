@@ -38,10 +38,10 @@ func (f *Fetcher) FetchMeshGateway(ctx context.Context, id *pbresource.ID) (*typ
 	return dec, nil
 }
 
-func (f *Fetcher) FetchMeshGateways(ctx context.Context) ([]*types.DecodedMeshGateway, error) {
+func (f *Fetcher) FetchMeshGateways(ctx context.Context, tenancy *pbresource.Tenancy) ([]*types.DecodedMeshGateway, error) {
 	dec, err := resource.ListDecodedResource[*pbmesh.MeshGateway](ctx, f.client, &pbresource.ListRequest{
 		Type:    pbmesh.MeshGatewayType,
-		Tenancy: resource.DefaultClusteredTenancy(),
+		Tenancy: tenancy,
 	})
 	if err != nil {
 		return nil, err

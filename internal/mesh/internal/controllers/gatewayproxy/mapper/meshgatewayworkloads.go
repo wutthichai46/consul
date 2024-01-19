@@ -11,14 +11,15 @@ import (
 	"github.com/hashicorp/consul/proto-public/pbresource"
 )
 
-var _ controller.DependencyMapper = AllMeshGatewayWorkloads
-
-// AllMeshGatewayWorkloads returns one controller.Request for each Workload
-// selected by a MeshGateway.
-var AllMeshGatewayWorkloads = func(ctx context.Context, rt controller.Runtime, _ *pbresource.Resource) ([]controller.Request, error) {
+// AllMeshGatewayWorkloadsInPartition returns one controller.Request for each Workload
+// selected by a MeshGateway in the partition of the Resource.
+var AllMeshGatewayWorkloadsInPartition = func(ctx context.Context, rt controller.Runtime, res *pbresource.Resource) ([]controller.Request, error) {
 	fetcher := fetcher.New(rt.Client, nil)
 
-	gateways, err := fetcher.FetchMeshGateways(ctx)
+	gateways, err := fetcher.FetchMeshGateways(ctx, &pbresource.Tenancy{
+		PeerName:  res.Id.Tenancy.PeerName,
+		Partition: res.Id.Tenancy.Partition,
+	})
 	if err != nil {
 		return nil, err
 	}

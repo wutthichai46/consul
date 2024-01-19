@@ -33,7 +33,7 @@ func Controller(cache *cache.Cache, trustDomainFetcher sidecarproxy.TrustDomainF
 	return controller.NewController(ControllerName, pbmesh.ProxyStateTemplateType).
 		WithWatch(pbcatalog.WorkloadType, dependency.ReplaceType(pbmesh.ProxyStateTemplateType)).
 		WithWatch(pbmesh.ComputedProxyConfigurationType, dependency.ReplaceType(pbmesh.ProxyStateTemplateType)).
-		WithWatch(pbmulticluster.ComputedExportedServicesType, mapper.AllMeshGatewayWorkloads).
+		WithWatch(pbmulticluster.ComputedExportedServicesType, mapper.AllMeshGatewayWorkloadsInPartition).
 		WithReconciler(&reconciler{
 			cache:          cache,
 			dc:             dc,
