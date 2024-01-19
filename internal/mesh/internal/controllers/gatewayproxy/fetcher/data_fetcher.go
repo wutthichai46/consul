@@ -38,6 +38,18 @@ func (f *Fetcher) FetchMeshGateway(ctx context.Context, id *pbresource.ID) (*typ
 	return dec, nil
 }
 
+func (f *Fetcher) FetchMeshGateways(ctx context.Context) ([]*types.DecodedMeshGateway, error) {
+	dec, err := resource.ListDecodedResource[*pbmesh.MeshGateway](ctx, f.client, &pbresource.ListRequest{
+		Type:    pbmesh.MeshGatewayType,
+		Tenancy: resource.DefaultClusteredTenancy(),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return dec, nil
+}
+
 func (f *Fetcher) FetchProxyStateTemplate(ctx context.Context, id *pbresource.ID) (*types.DecodedProxyStateTemplate, error) {
 	dec, err := resource.GetDecodedResource[*pbmesh.ProxyStateTemplate](ctx, f.client, id)
 	if err != nil {
@@ -77,6 +89,15 @@ func (f *Fetcher) FetchService(ctx context.Context, id *pbresource.ID) (*types.D
 		return nil, err
 	} else if dec == nil {
 		return nil, nil
+	}
+
+	return dec, nil
+}
+
+func (f *Fetcher) FetchServiceEndpoints(ctx context.Context, id *pbresource.ID) (*types.DecodedServiceEndpoints, error) {
+	dec, err := resource.GetDecodedResource[*pbcatalog.ServiceEndpoints](ctx, f.client, id)
+	if err != nil {
+		return nil, err
 	}
 
 	return dec, nil

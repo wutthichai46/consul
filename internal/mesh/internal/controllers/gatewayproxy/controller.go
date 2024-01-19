@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/consul/internal/controller/dependency"
 	"github.com/hashicorp/consul/internal/mesh/internal/controllers/gatewayproxy/builder"
 	"github.com/hashicorp/consul/internal/mesh/internal/controllers/gatewayproxy/fetcher"
+	"github.com/hashicorp/consul/internal/mesh/internal/controllers/gatewayproxy/mapper"
 	"github.com/hashicorp/consul/internal/mesh/internal/controllers/sidecarproxy"
 	"github.com/hashicorp/consul/internal/mesh/internal/controllers/sidecarproxy/cache"
 	"github.com/hashicorp/consul/internal/resource"
@@ -32,6 +33,7 @@ func Controller(cache *cache.Cache, trustDomainFetcher sidecarproxy.TrustDomainF
 	return controller.NewController(ControllerName, pbmesh.ProxyStateTemplateType).
 		WithWatch(pbcatalog.WorkloadType, dependency.ReplaceType(pbmesh.ProxyStateTemplateType)).
 		WithWatch(pbmesh.ComputedProxyConfigurationType, dependency.ReplaceType(pbmesh.ProxyStateTemplateType)).
+		WithWatch(pbmulticluster.ComputedExportedServicesType, mapper.AllMeshGatewayWorkloads).
 		WithReconciler(&reconciler{
 			cache:          cache,
 			dc:             dc,
