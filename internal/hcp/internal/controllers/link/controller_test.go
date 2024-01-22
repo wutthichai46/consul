@@ -12,10 +12,12 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 
+	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-uuid"
 	gnmmod "github.com/hashicorp/hcp-sdk-go/clients/cloud-global-network-manager-service/preview/2022-02-15/models"
 
 	svctest "github.com/hashicorp/consul/agent/grpc-external/services/resource/testing"
+	"github.com/hashicorp/consul/agent/hcp"
 	hcpclient "github.com/hashicorp/consul/agent/hcp/client"
 	"github.com/hashicorp/consul/agent/hcp/config"
 	"github.com/hashicorp/consul/internal/controller"
@@ -39,7 +41,7 @@ type controllerSuite struct {
 func mockHcpClientFn(t *testing.T) (*hcpclient.MockClient, HCPClientFn) {
 	mockClient := hcpclient.NewMockClient(t)
 
-	mockClientFunc := func(link *pbhcp.Link) (hcpclient.Client, error) {
+	mockClientFunc := func(config config.CloudConfig) (hcpclient.Client, error) {
 		return mockClient, nil
 	}
 
@@ -89,6 +91,16 @@ func (suite *controllerSuite) TestController_Ok() {
 			ConsulConfig:    "{}",
 		}, nil).Once()
 
+	statusF := func(ctx context.Context) (hcpclient.ServerStatus, error) {
+		return hcpclient.ServerStatus{ID: suite.T().Name()}, nil
+	}
+	mockClient.EXPECT().PushServerStatus(mock.Anything, &hcpclient.ServerStatus{ID: suite.T().Name()}).
+		Return(nil).Once()
+	hcpMgr := hcp.NewManager(hcp.ManagerConfig{
+		Logger:   hclog.NewNullLogger(),
+		StatusFn: statusF,
+	})
+
 	dataDir := testutil.TempDir(suite.T(), "test-link-controller")
 	mgr.Register(LinkController(
 		false,
@@ -96,6 +108,7 @@ func (suite *controllerSuite) TestController_Ok() {
 		mockClientFn,
 		config.CloudConfig{},
 		dataDir,
+		hcpMgr,
 	))
 	mgr.SetRaftLeader(true)
 	go mgr.Run(suite.ctx)
@@ -137,6 +150,16 @@ func (suite *controllerSuite) TestController_Initialize() {
 		ResourceID:   types.GenerateTestResourceID(suite.T()),
 	}
 
+	statusF := func(ctx context.Context) (hcpclient.ServerStatus, error) {
+		return hcpclient.ServerStatus{ID: suite.T().Name()}, nil
+	}
+	mockClient.EXPECT().PushServerStatus(mock.Anything, &hcpclient.ServerStatus{ID: suite.T().Name()}).
+		Return(nil).Once()
+	hcpMgr := hcp.NewManager(hcp.ManagerConfig{
+		Logger:   hclog.NewNullLogger(),
+		StatusFn: statusF,
+	})
+
 	dataDir := testutil.TempDir(suite.T(), "test-link-controller")
 
 	mgr.Register(LinkController(
@@ -145,6 +168,7 @@ func (suite *controllerSuite) TestController_Initialize() {
 		mockClientFn,
 		cloudCfg,
 		dataDir,
+		hcpMgr,
 	))
 	mgr.SetRaftLeader(true)
 	go mgr.Run(suite.ctx)
@@ -182,6 +206,7 @@ func (suite *controllerSuite) TestControllerResourceApisEnabled_LinkDisabled() {
 		mockClientFunc,
 		config.CloudConfig{},
 		dataDir,
+		hcp.NewManager(hcp.ManagerConfig{}),
 	))
 	mgr.SetRaftLeader(true)
 	go mgr.Run(suite.ctx)
@@ -217,6 +242,9 @@ func (suite *controllerSuite) TestControllerResourceApisEnabledWithOverride_Link
 		}, nil).Once()
 
 	dataDir := testutil.TempDir(suite.T(), "test-link-controller")
+	hcpMgr := hcp.NewManager(hcp.ManagerConfig{
+		Logger: hclog.NewNullLogger(),
+	})
 
 	mgr.Register(LinkController(
 		true,
@@ -224,6 +252,7 @@ func (suite *controllerSuite) TestControllerResourceApisEnabledWithOverride_Link
 		mockClientFunc,
 		config.CloudConfig{},
 		dataDir,
+		hcpMgr,
 	))
 
 	mgr.SetRaftLeader(true)
@@ -277,6 +306,7 @@ func (suite *controllerSuite) TestController_GetClusterError() {
 				mockClientFunc,
 				config.CloudConfig{},
 				dataDir,
+				hcp.NewManager(hcp.ManagerConfig{}),
 			))
 
 			mgr.SetRaftLeader(true)
